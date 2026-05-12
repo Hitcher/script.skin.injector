@@ -20,8 +20,10 @@ SKIN IMPLEMENTATION:
 ------------------------------------------------------------------------
 
 1. DEFINE THE PATH VARIABLE
-To prevent "Failed to read" errors during file I/O, use a Variable in 
-your skin to manage the content path.
+Use a variable to manage the content path. This ensures the container 
+is "force-cleared" while the script is running, preventing it from 
+retaining old data (ghosting) and avoiding "Failed to read" errors 
+during file I/O.
 
 <variable name="InjectorPath">
     <value condition="String.IsEqual(Window(home).Property(FilterReady),true)">special://temp/dynamic_filter.xsp</value>
