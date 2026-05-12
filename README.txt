@@ -26,7 +26,7 @@ retaining old data (ghosting) and avoiding "Failed to read" errors
 during file I/O.
 
 <variable name="InjectorPath">
-    <value condition="String.IsEqual(Window(home).Property(FilterReady),true)">special://temp/dynamic_filter.xsp</value>
+    <value condition="String.IsEqual(Window(home).Property(FilterReady),true)">special://profile/addon_data/script.skin.injector/dynamic_filter.xsp</value>
     <value>videodb://movies/titles/?year=9999</value>
 </variable>
 
@@ -70,7 +70,7 @@ SUPPORTED ARGUMENTS:
 ------------------------------------------------------------------------
 TECHNICAL NOTES:
 ------------------------------------------------------------------------
-- Pathing: The script writes to 'special://temp/dynamic_filter.xsp'.
+- Pathing: The script writes to 'special://profile/addon_data/script.skin.injector/dynamic_filter.xsp'.
 - Table Switching: The script automatically handles the switch between 
   movie_view, episode_view, and musicvideo_view.
 - Sanitization: All strings are HTML-escaped; special characters like 
