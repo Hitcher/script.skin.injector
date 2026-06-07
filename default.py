@@ -18,31 +18,59 @@ def create_xsp():
         xbmcvfs.mkdirs(profile_dir)
 
     # 3. Capture arguments safely using slice extraction (prevents IndexError)
-    media_type = sys.argv[1:2][0] if len(sys.argv) > 1 else "episode"
-    xsp_type = "musicvideos" if media_type == "musicvideo" else "movies" if media_type == "movie" else "episodes"
+    media_type_slice = sys.argv[1:2]
+    media_type = media_type_slice[0] if media_type_slice else "episode"
+    
+    # Map the correct smart playlist type string required by Kodi
+    if media_type == "musicvideo":
+        xsp_type = "musicvideos"
+    elif media_type == "movie":
+        xsp_type = "movies"
+    elif media_type == "tvshow":
+        xsp_type = "tvshows"
+    else:
+        xsp_type = "episodes"
     
     rules = []
     
     if media_type == "movie":
-        title = sys.argv[2:3][0] if len(sys.argv) > 2 else ""
-        year = sys.argv[3:4][0] if len(sys.argv) > 3 else ""
+        title_slice = sys.argv[2:3]
+        year_slice = sys.argv[3:4]
+        title = title_slice[0] if title_slice else ""
+        year = year_slice[0] if year_slice else ""
+        
+        if title: rules.append(f'<rule field="title" operator="is"><value>{html.escape(title)}</value></rule>')
+        if year:  rules.append(f'<rule field="year" operator="is"><value>{year}</value></rule>')
+
+    elif media_type == "tvshow":
+        title_slice = sys.argv[2:3]
+        year_slice = sys.argv[3:4]
+        title = title_slice[0] if title_slice else ""
+        year = year_slice[0] if year_slice else ""
         
         if title: rules.append(f'<rule field="title" operator="is"><value>{html.escape(title)}</value></rule>')
         if year:  rules.append(f'<rule field="year" operator="is"><value>{year}</value></rule>')
 
     elif media_type == "musicvideo":
-        artist = sys.argv[2:3][0] if len(sys.argv) > 2 else ""
-        title = sys.argv[3:4][0] if len(sys.argv) > 3 else ""
+        artist_slice = sys.argv[2:3]
+        title_slice = sys.argv[3:4]
+        artist = artist_slice[0] if artist_slice else ""
+        title = title_slice[0] if title_slice else ""
+        
         if artist: rules.append(f'<rule field="artist" operator="is"><value>{html.escape(artist)}</value></rule>')
         if title:  rules.append(f'<rule field="title" operator="is"><value>{html.escape(title)}</value></rule>')
 
     else: # Episode
-        file_path = sys.argv[2:3][0] if len(sys.argv) > 2 else ""
-        season = sys.argv[3:4][0] if len(sys.argv) > 3 else ""
-        title = sys.argv[4:5][0] if len(sys.argv) > 4 else ""
+        file_path_slice = sys.argv[2:3]
+        season_slice = sys.argv[3:4]
+        title_slice = sys.argv[4:5]
+        
+        file_path = file_path_slice[0] if file_path_slice else ""
+        season = season_slice[0] if season_slice else ""
+        title = title_slice[0] if title_slice else ""
         
         if file_path:
-            # Replaces slashes, cleans the directory tree, and extracts both pieces
+            # Safely acts on a pure string object now
             clean_path = os.path.normpath(file_path.replace('\\', '/'))
             
             # v0.0.2: Extract pure unique filename (e.g. S01E01.mkv)
@@ -80,6 +108,7 @@ def create_xsp():
     f.close()
 
     # 6. Refresh UI
+    xbmc.sleep(250)
     xbmc.executebuiltin('SetProperty(FilterReady,true,home)')
     xbmc.executebuiltin('Container.Refresh')
 

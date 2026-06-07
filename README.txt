@@ -45,6 +45,10 @@ Example (Movies):
 <onclick>ClearProperty(FilterReady,home)</onclick>
 <onclick>RunScript(script.skin.injector, "movie", "$INFO[ListItem.Title]", "$INFO[ListItem.Year]")</onclick>
 
+Example (TV Shows):
+<onclick>ClearProperty(FilterReady,home)</onclick>
+<onclick>RunScript(script.skin.injector, "tvshow", "$INFO[ListItem.TVShowTitle]", "$INFO[ListItem.Year]")</onclick>
+
 Example (TV Episodes):
 <onclick>ClearProperty(FilterReady,home)</onclick>
 <onclick>RunScript(script.skin.injector, "episode", "$INFO[ListItem.FileNameAndPath]", "$INFO[ListItem.Season]", "$INFO[ListItem.Title]")</onclick>
@@ -68,6 +72,9 @@ SUPPORTED ARGUMENTS:
 
 - MOVIES:
   RunScript(script.skin.injector, "movie", "[Title]", "[Year]")
+  
+- TV SHOWS:
+  RunScript(script.skin.injector, "tvshow", "[ShowTitle]", "[Year]")
 
 - TV EPISODES:
   RunScript(script.skin.injector, "episode", "[FileNameAndPath]", "[Season]", "[EpisodeTitle]")
