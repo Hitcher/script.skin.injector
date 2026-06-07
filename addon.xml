@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.skin.injector" name="Skin Injector" version="0.0.1" provider-name="Hitcher">
+<addon id="script.skin.injector" name="Skin Injector" version="0.0.2" provider-name="Hitcher">
 	<requires>
 		<import addon="xbmc.python" version="3.0.0" />
 	</requires>
@@ -14,6 +14,8 @@
 		<assets>
 			<icon>icon.png</icon>
 		</assets>
-		<news>Initial release</news>
+		<news>v0.0.2
+- Swapped TV Show string tracking for parent directory path filtering to natively separate duplicate TV series titles.
+- General sanitization and parameter slice extraction updates for script reliability.</news>
 	</extension>
 </addon>

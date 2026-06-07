@@ -3,7 +3,7 @@ SKIN INJECTOR - README
 ========================================================================
 ID: script.skin.injector
 Author: Hitcher
-Version: 0.0.1
+Version: 0.0.2
 License: GPL-2.0-only
 ========================================================================
 
@@ -45,6 +45,14 @@ Example (Movies):
 <onclick>ClearProperty(FilterReady,home)</onclick>
 <onclick>RunScript(script.skin.injector, "movie", "$INFO[ListItem.Title]", "$INFO[ListItem.Year]")</onclick>
 
+Example (TV Episodes):
+<onclick>ClearProperty(FilterReady,home)</onclick>
+<onclick>RunScript(script.skin.injector, "episode", "$INFO[ListItem.FileNameAndPath]", "$INFO[ListItem.Season]", "$INFO[ListItem.Title]")</onclick>
+
+Example (Music Videos):
+<onclick>ClearProperty(FilterReady,home)</onclick>
+<onclick>RunScript(script.skin.injector, "musicvideo", "$INFO[ListItem.Artist]", "$INFO[ListItem.Title]")</onclick>
+
 4. RETRIEVE THE DATA
 Use the container ID (e.g., 999) to access all library labels in your 
 layout.
@@ -62,7 +70,7 @@ SUPPORTED ARGUMENTS:
   RunScript(script.skin.injector, "movie", "[Title]", "[Year]")
 
 - TV EPISODES:
-  RunScript(script.skin.injector, "episode", "[ShowTitle]", "[Season]", "[EpisodeTitle]")
+  RunScript(script.skin.injector, "episode", "[FileNameAndPath]", "[Season]", "[EpisodeTitle]")
 
 - MUSIC VIDEOS:
   RunScript(script.skin.injector, "musicvideo", "[Artist]", "[Title]")
@@ -71,6 +79,11 @@ SUPPORTED ARGUMENTS:
 TECHNICAL NOTES:
 ------------------------------------------------------------------------
 - Pathing: The script writes to 'special://profile/addon_data/script.skin.injector/dynamic_filter.xsp'.
+- TV Episodes: Uses [FileNameAndPath] to isolate unique file entries and 
+  extract the root directory name. This cleanly separates duplicate 
+  series titles (e.g., Dark Matter 2015 vs 2024) without data floods.
+- Movie Versions: Kodi Omega Video Versions are currently unsupported due 
+  to core database limitations sharing matching titles and DBIDs.
 - Table Switching: The script automatically handles the switch between 
   movie_view, episode_view, and musicvideo_view.
 - Sanitization: All strings are HTML-escaped; special characters like 
